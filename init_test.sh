@@ -31,12 +31,10 @@ if [ -r "${FILES[0]}" ]; then
     NAME=${NAME%.conf}
     PIDFILE="/var/run/$NAME.pid"
     # check optional second param
-    start-stop-daemon --status --pidfile $PIDFILE
     CUR_SERVER_PID=$(cat ${PIDFILE})
+
     echo ${CUR_SERVER_PID}>>/sys/fs/cgroup/yuri/${CGROUPNAME}/cgroup.procs
   done;
-else
-  CONFIGS=(memcached)
 fi;
 sleep 1
 echo "cleaning all tracer"

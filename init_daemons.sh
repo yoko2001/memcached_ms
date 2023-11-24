@@ -79,12 +79,14 @@ case "$1" in
         echo -n "Starting $DESC: "
         start-stop-daemon --start --quiet --exec "$DAEMONBOOTSTRAP" -- /etc/${NAME}.conf $PIDFILE
         echo "$NAME."
+        sleep 1
         ;;
     stop)
         echo -n "Stopping $DESC: "
         start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE --exec $DAEMON
         echo "$NAME."
         rm -f $PIDFILE
+        sleep 1
         ;;
     status)
         [ $# -lt 2 ] && NAME=$

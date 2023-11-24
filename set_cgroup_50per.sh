@@ -16,7 +16,7 @@ else
 	echo "cgroup yuri/${CGROUPNAME} already exists"
 fi
 
-let totalmem=2*134217728 #256mb = (4*128mb)*50%
+let totalmem=134217728 #256mb = (4*128mb)*50%
 
 echo ${totalmem} > /sys/fs/cgroup/yuri/${CGROUPNAME}/memory.max
 echo "set memory.max to"
