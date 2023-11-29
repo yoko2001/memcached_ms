@@ -45,7 +45,7 @@ echo >> /sys/kernel/debug/tracing/set_ftrace_filter
 #setting trace funcs
 echo "add all lru_gen tracers below: "
 echo 1 > /sys/kernel/debug/tracing/events/lru_gen/folio_ws_chg/enable
-echo 1 > /sys/kernel/debug/tracing/events/lru_gen/folio_ws_chg_se/enable
+#echo 1 > /sys/kernel/debug/tracing/events/lru_gen/folio_ws_chg_se/enable
 
 echo "currently in ${CGROUPNAME} are:"
 cat /sys/fs/cgroup/yuri/${CGROUPNAME}/cgroup.procs

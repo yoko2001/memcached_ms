@@ -257,7 +257,7 @@ if __name__ == "__main__":
             access_class,
             access_class_rate,
             seeds_list[w-1],
-            num_load=20000,
+            num_load=80000,
             num_total_size = 15728640*2,#15mb 
             get_distri=0.2
         )
