@@ -7,11 +7,11 @@ echo $$ >> /sys/fs/cgroup/cgroup.procs
 echo 0 > /sys/kernel/debug/tracing/tracing_on
 
 CGROUPNAME=memcached_server
-INIT_SH=/home/yuri/workloads/memcached/init_daemons.sh
+INIT_SH=./init_daemons.sh
 echo "stop all existing memcached daemons"
     ${INIT_SH} stop
 sleep 1
-CGROUP_SH=/home/yuri/workloads/memcached/set_cgroup_50per.sh
+CGROUP_SH=./set_cgroup_50per.sh
 echo "create a cgroup for all existing daemons"
 ${CGROUP_SH}
 echo "start all predefined memcached daemons"

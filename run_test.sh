@@ -11,10 +11,10 @@ cat /sys/fs/cgroup/yuri/memcached_server/memory.stat > startmemstat.txt
 
 #start
 sudo sh -c "echo 1 > /sys/kernel/debug/tracing/tracing_on"
-python /home/yuri/workloads/memcached/client_run.py > log.file 2>&1 & 
+python ./client_run.py > log.file 2>&1 & 
 sudo cat /sys/kernel/debug/tracing/trace_pipe > trace_record_p.txt &
 
-sleep 300
+sleep 50
 #end
 sudo sh -c "echo 0 > /sys/kernel/debug/tracing/tracing_on"
 cat /sys/fs/cgroup/yuri/memcached_server/memory.stat > endmemstat.txt

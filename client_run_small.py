@@ -224,7 +224,7 @@ def task(i, client):
 #16个进程 每个进程存30mb at most
 #理论可存储128*4
 if __name__ == "__main__":
-    num_worker = 16
+    num_worker = 1
     seeds_list = list(map(lambda x: x, range(1, num_worker + 1)))
     print(seeds_list)
     config = {
