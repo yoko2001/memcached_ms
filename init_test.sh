@@ -1,6 +1,7 @@
 #! /bin/bash
-set -e
+rm /var/log/memcached_server*.log
 
+set -e
 #init state
 echo $$ >> /sys/fs/cgroup/cgroup.procs
 #turn off trace first

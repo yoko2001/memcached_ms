@@ -86,7 +86,7 @@ class Rand_Load(object):
             if prob > s_p_n['prob']: #match
                 name = self.next_name(s_p_n)
                 data = self.get_raw_load(s_p_n["size"])
-                self.size_prob[i]["num"] += 1
+                self.size_prob[len(self.size_prob)-i-1]["num"] += 1
                 return (name, data)
         return None
 

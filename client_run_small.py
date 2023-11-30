@@ -86,8 +86,9 @@ class Rand_Load(object):
             if prob > s_p_n['prob']: #match
                 name = self.next_name(s_p_n)
                 data = self.get_raw_load(s_p_n["size"])
-                self.size_prob[i]["num"] += 1
+                self.size_prob[len(self.size_prob)-i-1]["num"] += 1
                 return (name, data)
+        assert(0)
         return None
 
 class CliendWorker():
@@ -149,6 +150,7 @@ class CliendWorker():
             (key, data) = self.load_generator.next_load()
             self.using_size += (len(data)) #add this to remote
             mc.delete(key) #make sure its new
+            print("{0} delete {1}size[{2}]".format(self.name, key, len(data)))
             mc.set(key, data)
             if not mc.get(key) == data:
                 #retry 
@@ -156,10 +158,13 @@ class CliendWorker():
                 if not mc.get(key) == data:
                     print(key, "init add fail")
                     self.keys[key] = -1
+                    print("{0} fail set {1}size[{2}".format(self.name, key, len(data)))
                 else:
                     self.keys[key] = len(data)
+                    print("{0} success set {1}size[{2}".format(self.name, key, len(data)))
             else:
                 self.keys[key] = len(data)
+                print("{0} success set {1}size[{2}".format(self.name, key, len(data)))
             if self.keys[key] > 0 and random.random() < self.get_distri:
                 self.freq_keys.append(key) # key has higher frequencey
         print("worker {} total use size {} byte, {} keys init".format(self.name, self.using_size, len(self.keys.keys())))
