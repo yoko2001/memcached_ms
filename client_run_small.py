@@ -115,6 +115,7 @@ class CliendWorker():
         self.num_load = max(num_load, 500)
         self.keys = {} # "k1":len(data) , if value is 0 => k1 has been deleted
         self.freq_keys = []
+        self.all_keys = []
         self.using_size = 0
         self.data_lost = 0
         self.num_total_size = num_total_size
@@ -167,6 +168,7 @@ class CliendWorker():
                 print("{0} success set {1}size[{2}".format(self.name, key, len(data)))
             if self.keys[key] > 0 and random.random() < self.get_distri:
                 self.freq_keys.append(key) # key has higher frequencey
+            self.all_keys.append(key)
         print("worker {} total use size {} byte, {} keys init".format(self.name, self.using_size, len(self.keys.keys())))
         #now its filled up
         for i in range(0, self.num_load):
@@ -185,6 +187,7 @@ class CliendWorker():
                             self.keys[choosed_key] = -1
                         else:
                             self.keys[choosed_key] = len(data)  #update key
+                            print("{0} success set {1}size[{2}".format(self.name, key, len(data)))
                     else:
                         self.keys[choosed_key] = len(data)  #update key
                 elif not len(data) == self.keys[choosed_key]:
@@ -192,6 +195,7 @@ class CliendWorker():
                         print("err key %s", choosed_key)
                     else:
                         self.keys[choosed_key] = len(data)  #update key
+                    print("{0} success set [fix] {1}size[{2}".format(self.name, key, len(data)))
                 else: #good case
                     shuffled_data = list(data)
                     random.shuffle(shuffled_data)
@@ -205,6 +209,9 @@ class CliendWorker():
                             self.keys[choosed_key] = -1
                         else:
                             self.keys[choosed_key] = len(shuffled_data)
+                            print("{0} success set {1}size[{2}".format(self.name, key, len(data)))
+                    else:
+                        print("{0} success set {1}size[{2}".format(self.name, key, len(data)))
             elif access == "get":
                 data = mc.get(choosed_key)
                 if data == None:  #lost                
@@ -216,6 +223,10 @@ class CliendWorker():
                         print("err key %s", choosed_key)
                     else:
                         self.keys[choosed_key] = len(data)  #update key
+                        print("{0} success get update size{1}size[{2}".format(self.name, key, len(data)))
+                else: # success
+                    print("{0} success get {1}size[{2}".format(self.name, key, len(data)))
+
             else:
                 print("unkown access %s", access)
         print('%s finished' % self.name)
@@ -229,7 +240,7 @@ def task(i, client):
 #16个进程 每个进程存30mb at most
 #理论可存储128*4
 if __name__ == "__main__":
-    num_worker = 1
+    num_worker = 6
     seeds_list = list(map(lambda x: x, range(1, num_worker + 1)))
     print(seeds_list)
     config = {
@@ -246,8 +257,8 @@ if __name__ == "__main__":
     }
 
     load_config = [
-        # {"size":96, "prob": 0.4},
-        # {"size":384, "prob": 0.3},
+        {"size":96, "prob": 0.4},
+        {"size":384, "prob": 0.3},
         {"size":768, "prob": 0.2},
         {"size":1536, "prob": 0.1},
     ]
@@ -266,7 +277,7 @@ if __name__ == "__main__":
             seeds_list[w-1],
             num_load=160000,
             num_total_size = 16777216*2,#15728640*2,#15mb 
-            get_distri=1.1#0.3
+            get_distri=0.3
         )
         clients.append(client)
   

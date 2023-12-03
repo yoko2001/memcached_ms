@@ -14,9 +14,9 @@ cat /sys/fs/cgroup/yuri/memcached_server/memory.stat > startmemstat.txt
 sudo sh -c "echo 1 > /sys/kernel/debug/tracing/tracing_on"
 python ./client_run_small.py > log.txt 2>&1 & 
 
-sudo cat /sys/kernel/debug/tracing/trace_pipe > trace_record_p.txt &
+sudo sh -c "cat /sys/kernel/debug/tracing/trace_pipe > trace_record_p.txt &"
 
-sleep 10
+sleep 240
 #end
 sudo sh -c "echo 0 > /sys/kernel/debug/tracing/tracing_on"
 

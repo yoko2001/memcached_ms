@@ -45,6 +45,7 @@ echo 0 > /sys/kernel/debug/tracing/events/swap/scan_swap_map_slots/enable
 echo 0 > /sys/kernel/debug/tracing/events/lru_gen/folio_delete_from_swap_cache/enable
 echo 1 > /sys/kernel/debug/tracing/events/lru_gen/folio_ws_chg/enable
 echo 1 > /sys/kernel/debug/tracing/events/lru_gen/folio_ws_chg_se/enable
+echo 1 > /sys/kernel/debug/tracing/events/lru_gen/shadow_ext_transfer/enable
 echo 0 > /sys/kernel/debug/tracing/events/lru_gen/mglru_sort_folio/enable
 echo 0 > /sys/kernel/debug/tracing/events/lru_gen/walk_pte_range/enable
 echo 0 > /sys/kernel/debug/tracing/events/lru_gen/mglru_isolate_folio/enable
